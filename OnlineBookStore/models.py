@@ -1,5 +1,9 @@
 from django.db import models
 
+class AuthorManager(models.Manager):
+    def get_queryset(self):
+        return super(AuthorManager, self).get_queryset()[:1]
+
 class Author(models.Model):
     author_id = models.IntegerField(primary_key=True)
     author_name = models.CharField(max_length=25)
@@ -25,7 +29,7 @@ class Book(models.Model):
         ('4', 'HIGH'),
     )
 
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, related_name='books',on_delete=models.CASCADE, )
     title = models.CharField(max_length=50)
     published_year = models.IntegerField()
     ratings = models.CharField(max_length=1, choices=BOOK_RATINGS)
@@ -44,3 +48,5 @@ class Book(models.Model):
 
     class Meta:
         ordering = ('ratings',)
+
+    # objects = AuthorManager()

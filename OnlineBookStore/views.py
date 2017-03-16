@@ -1,39 +1,54 @@
 from .models import Author, Book
 from .serializers import BookSerializer, AuthorSerializer
-# from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-# from django.shortcuts import render
-
-
 
 @api_view(['GET'])
-def top_authors_and_works(request):
+def top_authors_and_works_rest(request):
     """
     Top 10 authors and there best works.
     """
-    authors = Author.objects.all().order_by('-total_books_sold')[:2]
-    print(authors)
-    serializer= AuthorSerializer(authors, many=True)
-    data=[]
-    data.append(serializer.data)
-    for author in authors:
-        books = Book.objects.filter(author=author).order_by('-no_of_copies_sold_till_date')[:2]
-        book_serializer = BookSerializer(books, many=True)
-        data.append((book_serializer.data))
-    return Response(data, template_name="rest_framework/api.html")
+    if request.method == "GET":
+
+        authors = Author.objects.all().order_by('-total_books_sold')[:5]
+        serializer= AuthorSerializer(authors, many=True)
+        return Response(serializer.data, template_name="rest_framework/api.html")
 
 
-@api_view(['GET'])
-def authors_list_rest(request):
-    """
-    List all the authors, or create a new author.
-    """
-    authors = Author.objects.all()
-    serializer = AuthorSerializer(authors, many=True)
-    return Response(serializer.data,template_name="rest_framework/api.html")
+# from rest_framework import status
+# from django.shortcuts import render
+# from rest_framework import generics
+# from rest_framework.views import APIView
+# from rest_framework import mixins
+# from rest_framework import generics
+
+
+# def top_authors_and_works(request):
+#     authors = Author.objects.all().order_by('-total_books_sold')[:2]
+#     books =[]
+#     for author in authors:
+#         books.append(Book.objects.filter(author=author).order_by('-no_of_copies_sold_till_date')[:4])
+#     return render(request,"bookstore/top_authors_and_their_works.html",{"books":books})
+
 #
-#
+# @api_view(['GET'])
+# def authors_list_rest(request):
+#     """
+#         List all the authors, or create a new author.
+#         """
+#     authors = Author.objects.all()
+#     serializer = AuthorSerializer(authors, many=True)
+#     return Response(serializer.data,template_name="rest_framework/api.html")
+
+
+
+# def top_authors_and_works(request):
+#     """
+#     Top 10 authors and their works, without rest.
+#     """
+#     authors = Author.objects.all()
+#     books =Book.objects.all()
+#     return render(request, "bookstore/top_authors_and_their_works.html", {"authors":authors,"books":books})
 # @api_view(['GET'])
 # def authors_work_rest(request, author_id):
 #     """
@@ -46,7 +61,7 @@ def authors_list_rest(request):
 #     else:
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 #
-#
+
 # @api_view(['GET'])
 # def books_list_rest(request):
 #     """
@@ -56,6 +71,7 @@ def authors_list_rest(request):
 #     serializer = BookSerializer(books, many=True)
 #     return Response(serializer.data)
 #
+# #
 #
 # @api_view(['GET'])
 # def top_ten_books_rest(request):
