@@ -8,7 +8,7 @@ from django.shortcuts import render
 @api_view(['GET'])
 def top_authors_and_works_rest(request):
     """
-    Top 10 authors and there 5 best works.
+    Top 10 authors and there 10 best works.
     """
     if request.method == "GET":
         authors = Author.objects.all().order_by('-total_books_sold')[:5]
@@ -19,7 +19,7 @@ def top_authors_and_works_rest(request):
 
 def top_authors_and_works(request):
     """
-    Top 10 authors and there 5 best works.
+    Top 10 authors and there 10 best works.
     """
     if request.method == "GET":
         authors = Author.objects.all().order_by('-total_books_sold')[:5]

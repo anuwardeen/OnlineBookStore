@@ -20,8 +20,9 @@ class AuthorSerializer(serializers.ModelSerializer):
         fields = ("author_id","author_name","author_email_id","books")
         # fields = "__all__"
 
-    @staticmethod
-    def get_books(obj):
+    def get_books(self,obj):
         book_list = Book.objects.filter(author=obj).order_by('-no_of_copies_sold_till_date')[:10]
         serializer = BookSerializer(book_list, many=True)
         return serializer.data
+
+
