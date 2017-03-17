@@ -1,7 +1,43 @@
+{% extends "bookstore/base.html"%}
 
-{%for book in books%}
-{%for item in book%}
-{{item.author_name}}
-{{item.title}}
-{%endfor%}
-{%endfor%}
+{%block content%}
+
+
+
+<div>
+    {%for records in serializer%}
+    <div class="container" style="margin-top:1em;">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="list-group">
+                    <li class="list-group-item">Author ID:{{records.author_id}}</li>
+                    <li class="list-group-item">Author Name:{{records.author_name}}</li>
+                    <li class="list-group-item">Email ID:{{records.author_email_id}}</li>
+                    <li class="list-group-item">Books
+
+                        <ul class="list-group">
+                            {%for i in records.books%}
+                            <ul class="list-group">
+                                <li class="list-group-item">Title : {{i.title}} </li>
+                                <li class="list-group-item">Published Year : {{i.published_year}} </li>
+                                <li class="list-group-item">Ratings : {{i.ratings}}</li>
+                                <li class="list-group-item">No Of Copies Sold Till Date : {{i.no_of_copies_sold_till_date}}</li>
+                            </ul>
+                            {%endfor%}
+                        </ul>
+
+
+                    </li>
+                    <!--<li class="list-group-item">Three-->
+                        <!--<ul class="list-group">-->
+                            <!--<li class="list-group-item">Item 3a</li>-->
+                            <!--<li class="list-group-item">Item 3b</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+    {%endfor%}
+</div>
+{% endblock%}

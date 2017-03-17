@@ -42,9 +42,9 @@ class Command(BaseCommand):
 
     def commit(self,authors_queries, books_queries):
         Author.objects.bulk_create(authors_queries)
-
-        for i in books_queries:
-            i.save()
+        # Book.objects.bulk_create(books_queries)
+        for record in books_queries:
+            record.save()
 
     def getting_new_author_id(self,last_id):
         return last_id+1

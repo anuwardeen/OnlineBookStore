@@ -1,8 +1,16 @@
 from django.db import models
 
-class AuthorManager(models.Manager):
-    def get_queryset(self):
-        return super(AuthorManager, self).get_queryset()[:1]
+# class BookManager(models.Manager):
+#     def bulk_create(self, objs, batch_size=None):
+#         for item in objs:
+#             new_author = Author.objects.get(author_name=item.author)
+#             total = new_author.total_books_sold
+#             total = total + item.no_of_copies_sold_till_date
+#             new_author.total_books_sold = total
+#             new_author.save()
+#         return objs
+
+
 
 class Author(models.Model):
     author_id = models.IntegerField(primary_key=True)
@@ -20,7 +28,10 @@ class Author(models.Model):
 
 
 
+
 class Book(models.Model):
+    """Manager overriden for bulk_create method and new manager named
+    BookManager() is assigned"""
 
     BOOK_RATINGS = (
         ('1', 'DIRT'),
@@ -48,5 +59,5 @@ class Book(models.Model):
 
     class Meta:
         ordering = ('ratings',)
-
-    # objects = AuthorManager()
+    #
+    # objects = BookManager()

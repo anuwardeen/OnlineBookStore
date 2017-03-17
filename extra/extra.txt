@@ -121,3 +121,9 @@
 # url(r'^books-of-author/(?P<author_id>\d+)$', views.authors_work, name="authorsWorks"),
 # url(r'^top-ten-books/$', views.top_ten_books_rest, name="topTenBooks"),
 # url(r'^author-of-the-year/(?P<year>\d+)', views.author_of_the_year_rest, name="authorOfTheYear"),
+
+
+{%for i in serializer%}
+{{i}}<br>{{i.author_id}}<br><br>
+{{i.author_books}}
+{%endfor%}

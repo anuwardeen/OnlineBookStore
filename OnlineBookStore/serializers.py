@@ -22,6 +22,6 @@ class AuthorSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_books(obj):
-        book_list = Book.objects.filter(author=obj).order_by('-no_of_copies_sold_till_date')[:2]
+        book_list = Book.objects.filter(author=obj).order_by('-no_of_copies_sold_till_date')[:10]
         serializer = BookSerializer(book_list, many=True)
         return serializer.data
